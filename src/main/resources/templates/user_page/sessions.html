@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/basic_actions :: head(title='All Players')"></head>
+<style>
+    .card-columns {
+        column-count: 5;
+    }
+</style>
+<body>
+<nav th:replace="fragments/basic_actions.html :: navbar"></nav>
+<div class="card-columns">
+	<div th:each="sessions : ${showAllSessionsByUserId}">
+		<div th:replace="fragments/basic_actions :: session_card(
+		enter_date=${sessions.getEnterDateFormatted()},
+		exit_date=${sessions.getExitDateFormatted()},
+		overall_length=${sessions.getSessionLength()})"></div>
+	</div>
+</div>
+</body>
+</html>

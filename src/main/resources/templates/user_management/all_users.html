@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/basic_actions :: head(title='All Players')"></head>
+<style>
+    .card-columns {
+        column-count: 4;
+    }
+</style>
+<body>
+<nav th:replace="fragments/basic_actions.html :: navbar"></nav>
+<div class="card-columns">
+	<div th:each="user : ${showAllUsersList}">
+		<div th:replace="fragments/basic_actions.html :: user_card(initials=${user.username}, id=${user.id}, inside=${user.inside})">
+		</div>
+	</div>
+</div>
+</body>
+</html>

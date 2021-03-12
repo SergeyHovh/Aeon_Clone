@@ -1,0 +1,59 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head th:fragment="head(title)">
+	<meta charset="UTF-8"/>
+	<title th:text="${title}"></title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
+		  crossorigin="anonymous" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"/>
+	<link crossorigin="anonymous" href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet"/>
+</head>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbar"
+	 th:with="auth=${#authorization.expression('isAuthenticated()')}">
+	<a class="navbar-brand" href="/">Anti-Cafe Clone</a>
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li th:if="${auth}" class="nav-item">
+				<a class="nav-link" href="/user_page">My Page</a>
+			</li>
+			<li th:if="${auth}" class="nav-item">
+				<a class="nav-link" href="/user_management/">User Management</a>
+			</li>
+		</ul>
+		<span th:text="${auth ? #authentication.name : 'Please Log In'}"
+			  class="btn my-2 my-sm-0"> username </span>
+		<form th:unless="${auth}" action="/registration/add" class="form-inline my-2 my-lg-0">
+			<button class="btn btn-outline-success mx-2" type="submit">Register</button>
+		</form>
+		<form th:unless="${auth}" action="/login" class="form-inline my-2 my-lg-0">
+			<button class="btn btn-outline-success mx-2" type="submit">Login</button>
+		</form>
+		<form th:if="${auth}" action="/logout" class="form-inline my-2 my-lg-0">
+			<button class="btn btn-outline-success mx-2" type="submit">Logout</button>
+		</form>
+	</div>
+</nav>
+
+<div class="card my-1" th:fragment="session_card(enter_date, exit_date, overall_length)">
+	<div class="card-body">
+		<h5 class="card-title m-4" th:text="${enter_date}">enter</h5>
+		<h5 class="card-title m-4" th:text="${exit_date}">exit</h5>
+		<h5 class="card-title m-4" th:text="${overall_length}">length</h5>
+	</div>
+</div>
+
+<div class="card my-1 text-white" th:classappend="${inside} ? bg-info : bg-secondary" th:fragment="user_card(initials, id, inside)">
+	<div class="card-body">
+		<i class="card-title m-4" th:text="${initials}">name</i>
+	</div>
+	<div class="card-footer text-muted form-inline">
+		<div class="mr-auto form-inline">
+			<form th:action="@{/user_management/start_session/{user_id}(user_id=${id})}" th:method="GET">
+				<input class="btn m-2" th:classappend="${inside} ? btn-danger : btn-success" type="submit" value="Start Session"/>
+			</form>
+			<form th:action="@{/user_management/end_session/{user_id}(user_id=${id})}" th:method="GET">
+				<input class="btn m-2" th:classappend="${!inside} ? btn-danger : btn-success" type="submit" value="End Session"/>
+			</form>
+		</div>
+	</div>
+</div>

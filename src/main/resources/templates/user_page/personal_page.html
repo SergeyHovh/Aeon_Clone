@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/basic_actions :: head(title='My Page')"></head>
+<body>
+<nav th:replace="fragments/basic_actions :: navbar">
+</nav>
+<a class="btn btn-outline-success m-2" href="/user_page/start">Start Session</a>
+<a class="btn btn-outline-success m-2" href="/user_page/end">End Session</a>
+<br/>
+<a class="btn btn-outline-success m-2" href="/user_page/show">Print all sessions</a>
+</body>
+</html>
